@@ -1,0 +1,77 @@
+#table {
+  font-size: 12px;
+  border: 1px solid black;
+}
+
+#table, td, th {
+    border: 1px solid black;
+    height: 50px;
+}
+
+label.roster select {
+    margin-left: 320px;
+    padding: 10px 42px 10px 10px;
+    background: #f8f8f8;
+    color: #444;
+    border: 1px solid #aaa;
+    border-radius: 0;
+    display: inline-block;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    outline: none;
+}
+label.roster select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #444;
+}
+label.roster select::-ms-expand {
+    display: none;
+}
+label.roster:before {
+    content: '';
+    right: 5px;
+    top: -7px;
+    width: 30px;
+    height: 33px;
+    background: #f8f8f8;
+    position: absolute;
+    pointer-events: none;
+    display: block;
+}
+label.roster { position: relative; }
+label.roster:after {
+    content: '>';
+    font: 16px Consolas, monospace;
+    color: #444;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    transform: rotate(90deg);
+    right: 2px;
+    top: -3px;
+    border-bottom: 1px solid #aaa;
+    position: absolute;
+    pointer-events: none;
+    width: 35px;
+    padding: 0 0 5px 0;
+    text-indent: 14px;
+}
+@media screen\0 {
+    label.roster:after {
+        width: 38px;
+        text-indent: 15px;
+        right: 0;
+    }
+}
+@media screen and (min--moz-device-pixel-ratio:0) {
+    label.roster select { padding-right: 40px; }
+    label.roster:before { right: 6px; }
+    label.roster:after {
+        text-indent: 14px;
+        right: 6px;
+        top: -5px;
+        width: 36px;
+    }
+}
