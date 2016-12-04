@@ -5,7 +5,7 @@ import time
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-from scoreFunction import ScoreFunction
+from scoreFunction import getScore
 from studentOptimization import studentOptimization
 
 start_time = time.time()
@@ -16,8 +16,7 @@ rosterPopulation = []
 while len(rosterPopulation) < 20:
     newRoster = Roster(classrooms,subjects, students)
     newRoster.fillInRoster()
-    scoreClass = ScoreFunction(newRoster)
-    score = scoreClass.getScore()
+    score = getScore(newRoster)
     rosterPopulation.append([newRoster, score])
 
 scores = []
@@ -121,8 +120,7 @@ while len(scores) == 1 or scores[-1] > 5 + scores[-2]:
             
             child[c] = studentOptimization(child[c])
 
-            scoreClass = ScoreFunction(child[c])
-            score = scoreClass.getScore()
+            score = getScore(child[c])
 
             # add child to population
             rosterPopulation.append([child[c], score])

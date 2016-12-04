@@ -143,7 +143,7 @@ class Roster:
         self.students = [Student(x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], subject_dct) 
                     for x in students]
 
-        #self.studentsActiveFirst = sorted(self.students, key=lambda x:len(x.subjects))
+        self.studentsActiveFirst = sorted(self.students, key=lambda x:len(x.subjects), reverse=True)
 
         #self.studentsReversed = sorted(self.students, key=lambda x:len(x.subjects), reverse=True)
 
