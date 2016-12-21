@@ -41,7 +41,7 @@ The following code translates the given data and information to python code
 [css to make it pretty](visuals/rosters.css)  
 
 #### Analysis of scores
-[Examples of score development per algorithm](exports.xlsx)
+[Examples of score development per algorithm](exports.xlsx)  
 [Exporting scores of computer 1 to Excel](scoresGraph_computer_1.py)  
 [Same for computer 2](scoresGraph_computer_2.py)  
 [Scores of computer 1](scoresGraph_computer1.xls)  
