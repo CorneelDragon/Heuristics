@@ -4,6 +4,9 @@ Code for 'programmeertheorie' course of the minor programming on the UvA. I deve
 #### Paper
 See my paper for the whole shebang
 
+#### Presentatie
+It's a prezi, click [here](http://prezi.com/noxxqhy06dsf/) to see it.
+
 #### Data
 
 The bare data is in the following csv's:  
