@@ -1,5 +1,5 @@
 # Heuristics
-Code for 'programmeertheorie' course of the minor programming on the UvA. I developed three algorithms in order to found solutions for an instance of the univeristy timetable program (for a description of instance, see: [here](heuristieken.nl/wiki/index.php?title=Lectures_%26_Lesroosters).
+Code for 'programmeertheorie' course of the minor programming on the UvA. I developed three algorithms in order to found solutions for an instance of the univeristy timetable program (for a description of instance, see: [here](http://www.heuristieken.nl/wiki/index.php?title=Lectures_%26_Lesroosters).
 
 #### Paper
 See my paper for the whole shebang
