@@ -4,7 +4,8 @@ import glob
 
 files = []
 
-for filename in glob.glob("rosters/*.json"):
+# Now only the best, imported rosters are set in total.json
+for filename in glob.glob("imported_rosters/*.json"):
 	jsonfile = open(filename, 'r')
 	files.append(json.load(jsonfile))
 

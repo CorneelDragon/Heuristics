@@ -32,41 +32,12 @@ def getScore(roster):
 			slots.append(activity.slot[0:2])
 		studentConflict -= (len(slots) - len(set(slots)))
 
-	# a subject that is spread evenly over the week is worth 20 points. However, some subjects have multiple groups 
-	# for worklectures and practica. For those I calculate for all the groups whether they qualify for 20 points. The 
-	# aggregated score is then divided by the number of groups to ensure a subject cannot score more than 20 points
-
 	subjectEvenlySpread = 0
 	overlapScore = 0
 	for subject in subjects:
-		lectures, workLectures, practicas = [], [], []
-		for activity in subject.activities:
-			if activity.kind == "WorkLecture":
-				workLectures.append(activity.slot[0])
-			if activity.kind == "Practicum":
-				practicas.append(activity.slot[0])			
-			if activity.kind == "Lecture":
-				lectures.append(activity.slot[0])
-
-		i, j = 0, 0 
-
-		if workLectures and practicas:
-			num = len(workLectures) * len(practicas)
-			for wl in workLectures:
-				for pr in practicas:
-					[i,j] = getSpreadOverlapScore(i,j, lectures + [wl] + [pr])
-
-		elif workLectures or practicas:
-			num = len(workLectures) + len(practicas)
-			for act in workLectures + practicas:
-				[i,j] = getSpreadOverlapScore(i,j, lectures + [act])
-
-		else:
-			num = 1
-			[i,j] = getSpreadOverlapScore(i,j, lectures)
-
-		overlapScore -= Decimal(str(i / num)).quantize(Decimal('.01'))
-		subjectEvenlySpread += Decimal(str(j / num)).quantize(Decimal('.01'))
+		subjectResult = prepareSubjectScore(subject)
+		overlapScore += subjectResult[0]
+		subjectEvenlySpread += subjectResult[1]
 
 	# final score
 	studentScore = capacityOverload + studentConflict
@@ -76,8 +47,44 @@ def getScore(roster):
 	#print(score)
 	return score
 
+def prepareSubjectScore(subject):
+
+	# a subject that is spread evenly over the week is worth 20 points. However, some subjects have multiple groups 
+	# for worklectures and practica. For those I calculate for all the groups whether they qualify for 20 points. The 
+	# aggregated score is then divided by the number of groups to ensure a subject cannot score more than 20 points
+	lectures, workLectures, practicas = [], [], []
+	for activity in subject.activities:
+		if activity.kind == "WorkLecture":
+			workLectures.append(activity.slot[0])
+		if activity.kind == "Practicum":
+			practicas.append(activity.slot[0])			
+		if activity.kind == "Lecture":
+			lectures.append(activity.slot[0])
+
+	i, j = 0, 0 
+
+	if workLectures and practicas:
+		num = len(workLectures) * len(practicas)
+		for wl in workLectures:
+			for pr in practicas:
+				[i,j] = getSpreadOverlapScore(i,j, lectures + [wl] + [pr])
+
+	elif workLectures or practicas:
+		num = len(workLectures) + len(practicas)
+		for act in workLectures + practicas:
+			[i,j] = getSpreadOverlapScore(i,j, lectures + [act])
+
+	else:
+		num = 1
+		[i,j] = getSpreadOverlapScore(i,j, lectures)
+
+	#overlapScore -= Decimal(str(i / num)).quantize(Decimal('.01'))
+	#subjectEvenlySpread += Decimal(str(j / num)).quantize(Decimal('.01'))
+
+	return [Decimal(str(i / num)).quantize(Decimal('.01')), Decimal(str(j / num)).quantize(Decimal('.01'))]
+
 def getSpreadOverlapScore(i, j, combiActivities):
-	overlapScore = (len(combiActivities) - len(set(combiActivities))) * 10
+	overlapScore = (len(combiActivities) - len(set(combiActivities))) * -10
 	spreadScore = 0
 
 	# if there is overlap no ideal spread is possible

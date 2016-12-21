@@ -9,72 +9,77 @@ from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
 
-start_time = time.time()
+def hillclimber():
+    startTime = time.process_time()
 
-bestRoster = Roster(classrooms,subjects, students)
-bestRoster.fillInRoster()
+    bestRoster = Roster(classrooms,subjects, students)
+    bestRoster.fillInRoster()
 
-bestScore = getScore(bestRoster)
+    bestScore = getScore(bestRoster)
 
-scores = []
-scores.append(bestScore)
+    scores = []
+    scores.append([bestScore,0])
 
-i = 0
-
-# after a cycle of length 'period' we check if there was still progress
-while len(scores) == 1 or scores[-1] > scores[-2]:
-
-    t = 0
+    iteration = 0
     period = 1000
 
-    while t < period:
+    # after a cycle of length 'period' we check if there was still progress
+    while len(scores) == 1 or scores[-1][0] > scores[-2][0]:
 
-        newRoster = copy.deepcopy(bestRoster)
+        t = 0
 
-        newRoster.getSlot()
-        slotOne = newRoster.slot
-        newRoster.getSlot() 
-        slotTwo = newRoster.slot
+        while t < period:
 
-        slots = [slotOne, slotTwo]
-        activities = []
+            newRoster = Roster(classrooms,subjects,students)
+            newRoster = Roster.duplicateRoster(newRoster,bestRoster)
 
-        #swap the activities (if any) of two slots
-        for index, slot in enumerate(slots):
-            if slot in newRoster.timetable:
-                activities.append(newRoster.timetable[slot])
-            else:
-                activities.append(None)
+            newRoster.getSlot()
+            slotOne = newRoster.slot
+            newRoster.getSlot() 
+            slotTwo = newRoster.slot
 
-        for i, activity in enumerate(activities):
-            for j, slot in enumerate(slots):
-                if i != j:
-                    if activity is not None:
-                        newRoster.timetable[slot] = activity
-                        activity.slot = slot
-                    else:
-                        if activities[j] is not None:
-                            del newRoster.timetable[slot] 
+            slots = [slotOne, slotTwo]
+            activities = []
 
-        # make sure students are sorted appropriately over the WorkLectures and Practica
-        # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
-        newRoster = studentOptimization(newRoster)
-        #oldScore = getScore(newRoster)
-        newRoster = roomOptimization(newRoster)
-        score = getScore(newRoster)
-        #test = score - oldScore
-        #print("test: ", test)
-        if score > bestScore:
-            bestRoster = newRoster
-            bestScore = score
-            tBest = (i * period) + t
+            #swap the activities (if any) of two slots
+            for index, slot in enumerate(slots):
+                if slot in newRoster.timetable:
+                    activities.append(newRoster.timetable[slot])
+                else:
+                    activities.append(None)
 
-        print(bestScore)
-        t += 1
+            for i, activity in enumerate(activities):
+                for j, slot in enumerate(slots):
+                    if i != j:
+                        if activity is not None:
+                            newRoster.timetable[slot] = activity
+                            activity.slot = slot
+                        else:
+                            if activities[j] is not None:
+                                del newRoster.timetable[slot] 
 
-    scores.append(bestScore)
-    i += 1
+            # make sure students are sorted appropriately over the WorkLectures and Practica
+            # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
+            newRoster = studentOptimization(newRoster)
+            #oldScore = getScore(newRoster)
+            newRoster = roomOptimization(newRoster)
+            score = getScore(newRoster)
+            #test = score - oldScore
+            #print("test: ", test)
+            if score > bestScore:
+                bestRoster = newRoster
+                bestScore = score
+                tBest = (iteration * period) + t
 
-print(bestScore, tBest,(i*period)+t)
-bestRoster.exportRoster("hillclimber",bestScore)
-print("--- %s seconds ---" % (time.time() - start_time))
+            print(bestScore)
+            t += 1
+
+        scores.append([bestScore, tBest])
+        iteration += 1
+
+    runtime = time.process_time() - startTime
+    #print(scores[-1][0],scores[-1][1], ((iteration-1)*period))
+    bestRoster.exportRoster("hillclimber",bestScore,runtime)
+    #print("--- %s seconds ---" % (runtime))
+
+hillclimber()

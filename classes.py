@@ -14,7 +14,6 @@ import random
 import sys
 import json
 sys.setrecursionlimit(10000)
-# import collections
 
 class Classroom:
     def __init__(self, room_number, capacity):
@@ -145,7 +144,6 @@ class Roster:
 
         self.studentsActiveFirst = sorted(self.students, key=lambda x:len(x.subjects), reverse=True)
 
-        #self.studentsReversed = sorted(self.students, key=lambda x:len(x.subjects), reverse=True)
 
         for x in self.subjects:
             x.setActivities()
@@ -168,7 +166,6 @@ class Roster:
         self.timetable = {}
 
         # make sure activities don't overlap (with overlapping activities there are simply to many options)
-        # due to this state space is decreased from 6.5^278 to 7.7^20
         for activity in self.activities:        
             self.getSlot()
             while self.slot in self.timetable:
@@ -191,11 +188,12 @@ class Roster:
             time = random.randint(0,3)
         self.slot = (day,time,room)
 
-    def exportRoster(self, method, score):
+    def exportRoster(self, method, score,runtime):
 
         score = str(score)
+        runtime = str(round(runtime, 2))
         time = datetime.datetime.now().strftime("%m.%d_%H.%M")
-        name = method+'_'+time+'_'+score
+        name = method+'_'+score+'_'+runtime+'_'+time
 
         issues = self.setIssues()
 
@@ -214,7 +212,7 @@ class Roster:
         # [{ "subject" : activity.subject.name, "kind" : activity.kind, "lecture_number" : activity.lecture_number, "group" : activity.group]}
         jsonString = json.dumps(export, indent=4)
 
-        f = open('rosters/'+name+'.json', 'w')
+        f = open('imported_rosters/'+name+'.json', 'w')
         print(jsonString, end="", file=f)
         f.close()
 
@@ -281,3 +279,16 @@ class Roster:
                 issues.append(["Stud.", studentIssue])
 
         return issues
+
+    # this module is faster than douplicating the roster with deep.copy   
+    def duplicateRoster(newRoster, bestRoster):
+        newRoster.timetable = {}
+        for x in range(5):
+            for y in range(5):
+                for z in range(len(newRoster.classrooms)):
+                    if(x,y,z) in bestRoster.timetable:
+                        for activity in newRoster.activities:
+                            if bestRoster.timetable[(x,y,z)] == activity:
+                                newRoster.timetable[(x,y,z)] = activity
+                                activity.slot = (x,y,z)
+        return newRoster

@@ -1,3 +1,5 @@
+import random
+
 def roomOptimization(roster):
     timetable = roster.timetable
     classrooms = sorted(roster.classrooms, key=lambda x:x.capacity, reverse=True)
@@ -11,13 +13,9 @@ def roomOptimization(roster):
 
             activityList = sorted(activityList, key=lambda x:len(x.students), reverse=True)
 
-            """
-            if genetics = True:
-                while len(classrooms) - len(activityList) > 0:
-                    activityList.insert(randrange(len(activityList)+1), None)
-            """            
-            while len(activityList) < 7:
-                activityList.append(None)
+            # fill the empty spaces at the end
+            while len(classrooms) - len(activityList) > 0:
+                activityList.insert(random.randrange(len(activityList)-1,len(activityList)+1), None)
 
             for i, activity in enumerate(activityList):
                 for j, room in enumerate(roster.classrooms):

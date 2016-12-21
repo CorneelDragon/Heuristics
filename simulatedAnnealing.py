@@ -10,92 +10,96 @@ from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
 
-start_time = time.time()
+def simulatedAnnealing():
 
-bestRoster = Roster(classrooms,subjects, students)
-bestRoster.fillInRoster()
+    startTime = time.process_time()
 
-bestScore = getScore(bestRoster)
-allTimeBestScore = bestScore
+    bestRoster = Roster(classrooms,subjects, students)
+    bestRoster.fillInRoster()
 
-i = 0
+    bestScore = getScore(bestRoster)
+    allTimeBestScore = bestScore
 
-scores = []
-scores.append(bestScore)
+    iteration = 0
 
-temp = 200
+    scores = []
+    scores.append([bestScore,0])
 
-while i < 20 or i < 2 + iHighscore:
+    temp = 100
 
-    t = 0
-    period = 1000
+    # due to temperature it becomes after 30 a hillclimber (so that's where I cross the line)
+    while iteration < 30 or scores[-1][0] > scores[-2][0]:
 
-    while t < period:
+        t = 0
+        period = 1000
 
-        newRoster = copy.deepcopy(bestRoster)
+        while t < period:
 
-        newRoster.getSlot()
-        slotOne = newRoster.slot
-        newRoster.getSlot() 
-        slotTwo = newRoster.slot
+            newRoster = Roster(classrooms,subjects,students)
+            newRoster = Roster.duplicateRoster(newRoster,bestRoster)
 
-        slots = [slotOne, slotTwo]
-        activities = []
+            newRoster.getSlot()
+            slotOne = newRoster.slot
+            newRoster.getSlot() 
+            slotTwo = newRoster.slot
 
-        #swap the activities (if any) of two slots
-        for index, slot in enumerate(slots):
-            if slot in newRoster.timetable:
-                activities.append(newRoster.timetable[slot])
-            else:
-                activities.append(None)
+            slots = [slotOne, slotTwo]
+            activities = []
 
-        for i, activity in enumerate(activities):
-            for j, slot in enumerate(slots):
-                if i != j:
-                    if activity is not None:
-                        newRoster.timetable[slot] = activity
-                        activity.slot = slot
-                    else:
-                        if activities[j] is not None:
-                            del newRoster.timetable[slot] 
+            #swap the activities (if any) of two slots
+            for index, slot in enumerate(slots):
+                if slot in newRoster.timetable:
+                    activities.append(newRoster.timetable[slot])
+                else:
+                    activities.append(None)
 
-        # make sure students are sorted appropriately over the WorkLectures and Practica
-        # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
-        newRoster = studentOptimization(newRoster)
-        newRoster = roomOptimization(newRoster)
-        score = getScore(newRoster)
+            for i, activity in enumerate(activities):
+                for j, slot in enumerate(slots):
+                    if i != j:
+                        if activity is not None:
+                            newRoster.timetable[slot] = activity
+                            activity.slot = slot
+                        else:
+                            if activities[j] is not None:
+                                del newRoster.timetable[slot] 
 
-        delta = score - bestScore
+            # make sure students are sorted appropriately over the WorkLectures and Practica
+            # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
+            newRoster = studentOptimization(newRoster)
+            newRoster = roomOptimization(newRoster)
+            score = getScore(newRoster)
 
-        if delta > 0:
-            bestRoster = newRoster
-            bestScore = score
-            iBest = (i*period)+ t
+            delta = score - bestScore
 
-            if score > allTimeBestScore:
-                allTimeBestScore = score
-                allTimeBestRoster = newRoster
-                allTImeBestI = (i*period)+t
-                iHighscore = i
-
-        else: 
-            p = math.exp(delta / Decimal(temp))
-            if random.random() < p :
-
+            if delta > 0:
                 bestRoster = newRoster
                 bestScore = score
-                iBest = (i*period)+ t
-                #print(bestScore, tBest)
+                iBest = (iteration*period)+ t
 
-        temp = 200 * math.pow(10 / 200,((i*period)+t)/20000)
-        t += 1
-        print(bestScore)
+                if score > allTimeBestScore:
+                    allTimeBestScore = score
+                    allTimeBestRoster = newRoster
+                    allTImeBestI = (iteration*period)+t
 
-    scores.append(allTimeBestScore)
-    i +=1
+            else: 
+                p = math.exp(delta / Decimal(temp))
+                if random.random() < p :
 
-print(bestScore, iBest, (i*period)+ t)
-print(allTimeBestScore, allTImeBestI)
-bestRoster.exportRoster("annealing",bestScore)
-allTimeBestRoster.exportRoster("annealing",allTimeBestScore)
-print("--- %s seconds ---" % (time.time() - start_time))
+                    bestRoster = newRoster
+                    bestScore = score
+                    iBest = (iteration*period)+ t
+
+            temp = 100 * math.pow(10 / 100,((iteration*period)+t)/10000)
+            t += 1
+            #print(bestScore)
+
+        scores.append([allTimeBestScore, allTImeBestI])
+        iteration +=1
+
+    runtime = time.process_time() - startTime
+    #print(bestScore, iBest, ((iteration-1)*period))
+    #print(allTimeBestScore, allTImeBestI)
+    allTimeBestRoster.exportRoster("annealing",allTimeBestScore,runtime)
+    #print("--- %s seconds ---" % (runtime))
+
+simulatedAnnealing()
