@@ -17,16 +17,17 @@ Additional information regarding this data is saved in the following excel files
 [courses with additional calculations](vakken_calculations.xlsx)  
 
 #### Representation 
-The following code translates the given data and information to python code  
+The following code translates the given data and information to python code:  
 [import data from csv](csvFilesController.py)  
 [classes](classes.py)  
 [scorefunction implementation](scoreFunction.py)  
 
 #### Heuristics and local search techniques  
+I developed three the following algorithms and local search for student- and room optimalization:  
 [Hillclimber](hillclimber.py)  
 [Simulated Annealing](simulatedAnnealing.py)  
 [Genetic Algorithm](genetics.py)
-* [crossover methods](reproduction.py)  
+* including: [crossover methods](reproduction.py)  
 
 [Student Optimalization](studentOptimalization.py)  
 [Room Optimalization](roomOptimalization.py)  
@@ -34,6 +35,7 @@ The following code translates the given data and information to python code
 [Manager to create 70 roster with each algorithm](taskManager.py)  
 
 #### Visualization  
+I made a visual with an export to json:  
 [translate folder of rosters to json](visual.py)  
 [json with necessary data for visual](visuals/visual.json)  
 [javascript to dynamically show data](visuals/roster.js)  
@@ -41,13 +43,15 @@ The following code translates the given data and information to python code
 [css to make it pretty](visuals/rosters.css)  
 
 #### Analysis of scores
+I did on two computers 70 runs and exported the scores to excel (and visualized them there):  
 [Examples of score development per algorithm](exports.xlsx)  
 [Exporting scores of computer 1 to Excel](scoresGraph_computer_1.py)  
 [Same for computer 2](scoresGraph_computer_2.py)  
-[Scores of computer 1](scoresGraph_computer1.xls)  
-[Scores of computer 2](scoresGraph_computer_1.xls)  
+[Scores on computer 1](scoresGraph_computer1.xls)  
+[Scores on computer 2](scoresGraph_computer_1.xls)  
 
 #### Analysis of rosters
+Finally, I wanted to analyze the rosters themselves. This is how far I got:  
 [classes for roster importation](classesImport.py)  
 [Importing roster and trying to improve them further](importForImprovement.py)  
 [Script for analyzing the used the slots per day](ImportTestDays.py)  
