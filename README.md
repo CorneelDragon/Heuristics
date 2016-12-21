@@ -48,10 +48,10 @@ The following code translates the given data and information to python code
 [Scores of computer 2](scoresGraph_computer_1.xls)  
 
 #### Analysis of rosters
-[classes for roster importation](classesImport.py)
-[Importing roster and trying to improve them further](importForImprovement.py)
-[Script for analyzing the used the slots per day](ImportTestDays.py)
-[Exporting per type of activity on which day it falls for all good rosters](importForComparison.py)
-[Comparison per type of activity for good and really rosters](activitySpread.xls)
-[Attempt to compare the rosters with each other](importCompareRosters.py)
+[classes for roster importation](classesImport.py)  
+[Importing roster and trying to improve them further](importForImprovement.py)  
+[Script for analyzing the used the slots per day](ImportTestDays.py)  
+[Exporting per type of activity on which day it falls for all good rosters](importForComparison.py)  
+[Comparison per type of activity for good and really rosters](activitySpread.xls)  
+[Attempt to compare the rosters with each other](importCompareRosters.py)  
 
