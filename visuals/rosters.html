@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--
+Author: Corneel den Hartogh
+Course: Data Processing
+Instructor: Gosia Mingut
+-->
+<html>
+<head>
+<meta charset="utf-8">
+<meta content="utf-8" http-equiv="encoding">
+<link rel="stylesheet" href="rosters.css">
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="roster.js"></script>
+
+<div>
+	<label class="roster">
+		<select id="rosters" name="select" class="main-form">
+		</select>
+	</label>
+	<br>
+	<select id="classrooms" name="select" class="main-form">
+		    <option value="">Select Room</option>
+	</select>
+	<select id="subjects" name="select" class="main-form">
+	    <option value="">Select Subject</option>
+	</select>
+
+	<select id="students" name="select" class="main-form">
+	    <option value="">Select Student</option>
+	</select>
+
+	<select id="issues" name="select" class="main-form">
+	    <option value="">Select Issue</option>
+	</select>
+
+</div>
+<div>
+	<table class="table" id="table"> </table>
+</div>
+<div>
+	<select id="studentList" name="select" class="main-form">
+	    <option value="">Students in activity</option>
+	</select>
+</div>
+<div>
+	<p id ="explainer">
+		Notes:<br>
+		- Click on slot to see students in activity<br><br>
+
+		Depending on the object choosen, a slot can get a different background-color<br><br>
+		Room:<br>
+		- More students than places --> Red<br><br>
+
+		Student:<br>
+		- More than one activity in a slot --> Red<br><br>
+
+		Subject:<br>
+		- Conflicting actvities on the same day --> Red<br>
+		- Activites sub-optimally spread over the week --> Light Red<br>
+		- Activities optimally spread --> Green<br>
+</div>
+</body>
+</html>

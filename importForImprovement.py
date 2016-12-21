@@ -122,4 +122,4 @@ for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.sp
 		print(bestScore)
 	
 	runtime = time.process_time() - startTime
-	bestRoster.exportRoster("imported",bestScore,runtime)
+	bestRoster.exportRoster("imported_rosters/imported",bestScore,runtime)

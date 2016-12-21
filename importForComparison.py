@@ -16,7 +16,7 @@ from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
 
 
-excel_file = "activitySpreadOptimized.xls"
+excel_file = "activitySpread.xls"
 rosters = 0
 activityTypes = {}
 

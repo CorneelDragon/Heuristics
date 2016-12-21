@@ -16,8 +16,8 @@ rosters = 0
 activityTypes = {}
 
 # select all rosters that score 99% of optimal score (=1360)
-for filename in glob.glob('top_rosters/*.json'):
-	if float(filename.split("_",3)[2]) >= 1360.00:
+for filename in glob.glob('rosters_computer_1/*.json'):
+	if float(filename.split("_",4)[3]) >= 1360.00:
 		rosters += 1
 		monday,tuesday,wednesday,thursday,friday = 0,0,0,0,0
 		with open(filename) as jsonfile:
@@ -34,12 +34,12 @@ for filename in glob.glob('top_rosters/*.json'):
 					thursday += 1
 				elif value == 4:
 					friday += 1
-			if thursday > 27:
-				print (thursday, filename)
+			if wednesday > 25:
+				print (wednesday, filename)
 
 
-for filename in glob.glob('imported_rosters/*.json'):
-	if float(filename.split("_",3)[2]) >= 1360.00:
+for filename in glob.glob('rosters_computer_2/*.json'):
+	if float(filename.split("_",4)[3]) >= 1360.00:
 		rosters += 1
 		monday,tuesday,wednesday,thursday,friday = 0,0,0,0,0
 		with open(filename) as jsonfile:
@@ -56,5 +56,5 @@ for filename in glob.glob('imported_rosters/*.json'):
 					thursday += 1
 				elif value == 4:
 					friday += 1
-			if thursday > 27:
-				print (thursday, filename)
+			if wednesday > 25:
+				print (wednesday, filename)
