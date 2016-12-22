@@ -1,7 +1,7 @@
 # Heuristics
 Code for 'programmeertheorie' course of the minor programming on the UvA. I developed three algorithms in order to found solutions for an instance of the univeristy timetable program (for a description of instance, click [here](http://www.heuristieken.nl/wiki/index.php?title=Lectures_%26_Lesroosters)).
 
-The Simulated Annealing (with local search techniques) algorithm deliverd continuously rosters with scores above 99% of the optimal score and the best result was 99.64% of the best score (1411, with possible scores between the -6541 and 1440). 
+The Simulated Annealing (with local search techniques) algorithm deliverd continuously rosters with scores above 99% of the optimal score and the best result was 99.64% of the best score (1411, with possible scores between the -6541 and 1440). While I did not prove this roster was the best roster possible it is without doubt a very strong result). 
 
 #### Paper
 See my paper for the whole shebang
