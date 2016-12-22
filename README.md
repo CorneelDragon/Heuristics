@@ -4,7 +4,7 @@ Code for 'programmeertheorie' course of the minor programming on the UvA. I deve
 The Simulated Annealing (with local search techniques) algorithm deliverd continuously rosters with scores above 99% of the optimal score and the best result was 99.64% of the best score (1411, with possible scores between the -6541 and 1440). While I did not prove this roster was the best roster possible it is without doubt a very strong result). 
 
 #### Paper
-See my paper for the whole shebang
+[See my paper for the whole shebang](paper.pdf)
 
 #### Presentation (in Dutch)
 It's a prezi, click [here](http://prezi.com/noxxqhy06dsf/) to see it,.
