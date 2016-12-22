@@ -69,5 +69,6 @@ Finally, I wanted to analyze the rosters themselves. This is how far I got:
 [Script for analyzing the used the slots per day](ImportTestDays.py)  
 [Exporting per type of activity on which day it falls for all good rosters](importForComparison.py)  
 [Comparison per type of activity for good and really rosters](activitySpread.xls)  
-[Attempt to compare the rosters with each other](importCompareRosters.py)  
+[Attempt to compare the rosters with each other](importCompareRosters.py)
+[Script that provides number of occurences per conflict in the 20 optimized rosters](exportIssues.py)
 
