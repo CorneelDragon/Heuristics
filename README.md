@@ -1,14 +1,15 @@
 # Heuristics
 Code for 'programmeertheorie' course of the minor programming on the UvA. I developed three algorithms in order to found solutions for an instance of the univeristy timetable program (for a description of instance, click [here](http://www.heuristieken.nl/wiki/index.php?title=Lectures_%26_Lesroosters)).
 
+The Simulated Annealing (with local search techniques) algorithm deliverd continuously rosters with scores above 99% of the optimal score and the best result was 99.64% of the best score (1411, with possible scores between the -6541 and 1440). 
+
 #### Paper
 See my paper for the whole shebang
 
-#### Presentatie
-It's a prezi, click [here](http://prezi.com/noxxqhy06dsf/) to see it.
+#### Presentation (in Dutch)
+It's a prezi, click [here](http://prezi.com/noxxqhy06dsf/) to see it,.
 
-#### Data
-
+#### Data  
 The bare data is in the following csv's:  
 [studens and their courses](studenten_roostering.csv)  
 [courses](vakken.csv)  
@@ -36,6 +37,14 @@ I developed three the following algorithms and local search for student- and roo
 [Room Optimalization](roomOptimalization.py)  
 
 [Manager to create 70 roster with each algorithm](taskManager.py)  
+
+#### Produced Rosters
+I generated rosters on two computers. In addition, I have some old rosters from preliminary tests and I optimized the best rosters (with scores above 99.5%):
+[first made rosters](old rosters)
+[rosters computer 1](rosters_computer_1)
+[rosters computer 2](rosters_computer_2)
+[selected best performing rosters](top_rosters)
+[the best performing rosters optimized](imported_rosters)
 
 #### Visualization  
 I made a visual with an export to json:  
