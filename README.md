@@ -30,8 +30,7 @@ The following code translates the given data and information to python code:
 I developed three the following algorithms and local search for student- and room optimalization:  
 [Hillclimber](hillclimber.py)  
 [Simulated Annealing](simulatedAnnealing.py)  
-[Genetic Algorithm](genetics.py)
-* including: [crossover methods](reproduction.py)  
+[Genetic Algorithm](genetics.py) (including: [crossover methods](reproduction.py))  
 
 [Student Optimalization](studentOptimalization.py)  
 [Room Optimalization](roomOptimalization.py)  
