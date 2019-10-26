@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Simulated Annealing algorithm code
+
+"""
+
 import random
 import copy
 import time
@@ -40,7 +49,7 @@ def simulatedAnnealing():
 
             newRoster.getSlot()
             slotOne = newRoster.slot
-            newRoster.getSlot() 
+            newRoster.getSlot()
             slotTwo = newRoster.slot
 
             slots = [slotOne, slotTwo]
@@ -61,7 +70,7 @@ def simulatedAnnealing():
                             activity.slot = slot
                         else:
                             if activities[j] is not None:
-                                del newRoster.timetable[slot] 
+                                del newRoster.timetable[slot]
 
             # make sure students are sorted appropriately over the WorkLectures and Practica
             # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
@@ -81,7 +90,7 @@ def simulatedAnnealing():
                     allTimeBestRoster = newRoster
                     allTImeBestI = (iteration*period)+t
 
-            else: 
+            else:
                 p = math.exp(delta / Decimal(temp))
                 if random.random() < p :
 

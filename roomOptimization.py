@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Local search help to ensure that largest rooms get activity with most students
+
+"""
+
 import random
 
 def roomOptimization(roster):

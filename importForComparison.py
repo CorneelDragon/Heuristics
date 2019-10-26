@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Exporting per type of activity on which day it falls for all good rosters
+
+"""
+
 import random
 import copy
 import json
@@ -10,7 +19,7 @@ from xlutils.copy import copy
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-import classesImport as ci 
+import classesImport as ci
 from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
@@ -20,7 +29,7 @@ excel_file = "activitySpread.xls"
 rosters = 0
 activityTypes = {}
 
-# select all rosters that score 99% of optimal score (=1360)
+# select all rosters that score aboven 1400 from 2 different places
 for filename in glob.glob('rosters/*.json'):
 	if float(filename.split("_",2)[1]) >= 1400.00:
 		rosters += 1
@@ -49,7 +58,7 @@ ws = wb.get_sheet(0)
 ws.write(0,7,str(rosters) + " rosters above 1400")
 
 
-row = 1	
+row = 1
 for key, values in activityTypes.items():
 	monday,tuesday,wednesday,thursday,friday = 0,0,0,0,0
 	for value in values:
@@ -64,14 +73,14 @@ for key, values in activityTypes.items():
 		elif value == 4:
 			friday += 1
 	result = [monday, tuesday, wednesday, thursday, friday]
-	
+
 	ws.write(row,7,key)
 	ws.write(row,8,result[0])
 	ws.write(row,9,result[1])
 	ws.write(row,10,result[2])
 	ws.write(row,11,result[3])
 	ws.write(row,12,result[4])
-	row += 1	
+	row += 1
 
 wb.save(excel_file)
 

@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Importing roster and trying to improve them further
+
+"""
+
 import random
 import copy
 import json
@@ -7,12 +16,12 @@ from decimal import Decimal
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-import classesImport as ci 
+import classesImport as ci
 from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
 
-
+# select top rosters
 for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.split("_",3)[2]), reverse=True):
 
 	startTime = time.process_time()
@@ -42,7 +51,7 @@ for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.sp
 						studentsActivity.append(student_dct[student[-7:]])
 					elif student[-7:][0] == " ":
 						studentsActivity.append(student_dct[student[-6:]])
-						test = student_dct[student[-6:]]				
+						test = student_dct[student[-6:]]
 					else:
 						studentsActivity.append(student_dct[student[-8:]])
 
@@ -60,8 +69,7 @@ for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.sp
 	    bestRoster.timetable[activity.slot] = activity
 
 	bestScore = getScore(bestRoster)
-	print(bestScore)
-	
+
 	scores = []
 	scores.append(bestScore)
 
@@ -102,7 +110,7 @@ for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.sp
 												activity.slot = slot
 											else:
 												if activities[j] is not None:
-													del newRoster.timetable[slot] 
+													del newRoster.timetable[slot]
 
 								# make sure students are sorted appropriately over the WorkLectures and Practica
 								# get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
@@ -110,16 +118,13 @@ for filename in sorted(glob.glob('top_rosters/*.json'), key=lambda x: float(x.sp
 								#oldScore = getScore(newRoster)
 								newRoster = roomOptimization(newRoster)
 								score = getScore(newRoster)
-								#test = score - oldScore
-								#print("test: ", test)
 								if score > bestScore:
 									bestRoster = newRoster
 									bestScore = score
 
-								
+
 
 		scores.append(bestScore)
-		print(bestScore)
-	
+
 	runtime = time.process_time() - startTime
 	bestRoster.exportRoster("imported_rosters/imported",bestScore,runtime)

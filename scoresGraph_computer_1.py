@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Export scores to excel on pc 1
+
+"""
+
 import json
 import glob
 import random

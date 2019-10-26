@@ -1,10 +1,11 @@
-# import roster x and save type and timetable
-# save empty spots as well
-# 
-# compare with other rosters, check if roster is same type
-# get also the empty spots out of other rosters
-#
-#
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Attempt to compare the rosters with each other
+
+"""
 
 import random
 import copy
@@ -18,7 +19,7 @@ from xlutils.copy import copy
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-import classesImport as ci 
+import classesImport as ci
 from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
@@ -72,30 +73,14 @@ for filename in glob.glob('rosters/*.json'):
 		topBool = True
 		top += 1
 	rosterList.append(saveRoster(filename, hillclimber, annealing, genetics))
-	#osterList.append([filename, activitiesDict, kind, topBool])
 
 for filename in glob.glob('rosters_server/*.json'):
 	if float(filename.split("_",3)[2]) >= 1400.00:
 		topBool = True
 		top += 1
 	rosterList.append(saveRoster(filename, hillclimber, annealing, genetics))
-	#osterList.append([filename, activitiesDict, kind, topBool])
 
 for roster in rosterList:
 	timetable = roster[1]
 	for roster in rosterList:
 
-
-"""
-print(len(rosterList))
-print("HC: ", len(hillclimber))
-print("SA: ", len(annealing))
-print("GA:", len(genetics))
-print("top: ", top)
-for x in range(5):
-	for y in range (5):
-		for z in range(7):
-			for key,value in rosterList[0][1].items():
-				if (x,y,z) == key:
-					print (key, value)
-"""

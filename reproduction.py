@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: a Variety of crossover methods for the genetic algorithm
+
+"""
+
 from scoreFunction import prepareSubjectScore
 
 def reproduceTimeOrDay(timetable, day, timeSlot, first, second, activities, roomAmount):
@@ -13,7 +22,7 @@ def reproduceTimeOrDay(timetable, day, timeSlot, first, second, activities, room
 			end = 5
 		if recombine == 0 or recombine == 3:
 			parentTimetable = first.timetable
-		else: 
+		else:
 			parentTimetable = second.timetable
 
 		if day == 0:
@@ -26,7 +35,7 @@ def reproduceTimeOrDay(timetable, day, timeSlot, first, second, activities, room
 			endDay = end
 			startTimeSlot = 0
 			endTimeSlot = 5
-        
+
 		for x in range(startDay, endDay):
 			for y in range (startTimeSlot, endTimeSlot):
 				for z in range(roomAmount):
@@ -48,7 +57,7 @@ def reproduceSubjects(timetable, first, second, activities, roomAmount):
 		if sum(firstResult) > sum(secondResult):
 			bestSubject = first.subjectsLargeStart[x]
 			repairSubject = second.subjectsLargeStart[x]
-		else: 
+		else:
 			bestSubject = second.subjectsLargeStart[x]
 			repairSubject = first.subjectsLargeStart[x]
 
@@ -57,7 +66,7 @@ def reproduceSubjects(timetable, first, second, activities, roomAmount):
 				for activity in activities:
 					if activity == activityBest:
 						timetable[activityBest.slot] = activity
-						activity.slot = activityBest.slot 
+						activity.slot = activityBest.slot
 			else:
 				for activityRepair in repairSubject.activities:
 					if activityBest == activityRepair:
@@ -65,6 +74,6 @@ def reproduceSubjects(timetable, first, second, activities, roomAmount):
 							for activity in activities:
 								if activity == activityRepair:
 									timetable[activityRepair.slot] = activity
-									activity.slot = activityRepair.slot 
+									activity.slot = activityRepair.slot
 
 	return [timetable, activities]

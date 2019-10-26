@@ -1,12 +1,12 @@
 """
-All the classes for this endeavor:
 
-- Classroom
-- Subject
- - Activity
-- Student 
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: All the classes: classroom, subject, activity, student
 
 """
+
 import datetime
 import copy
 import math
@@ -21,15 +21,15 @@ class Classroom:
         self.capacity = int(capacity)
 
         self.slots = []
-    
+
     def __str__(self):
         return self.room_number
 
 
 class Subject:
-    def __init__(self, name, n_lectures, n_workLectures, w_maxStud, 
+    def __init__(self, name, n_lectures, n_workLectures, w_maxStud,
                  n_practicas, p_maxStud):
-        
+
         self.name = name
         self.students = []
 
@@ -37,7 +37,7 @@ class Subject:
         self.activities = [Activity(self, "Lecture", i, "nvt") for i in range(int(n_lectures))] + \
                         [Activity(self, "WorkLecture", i, w_maxStud) for i in range(int(n_workLectures))] + \
                         [Activity(self, "Practicum", i, p_maxStud) for i in range(int(n_practicas))]
-        
+
     def __str__(self):
         return self.name
 
@@ -55,7 +55,7 @@ class Subject:
                     activity = copy.copy(activity)
                     activity.group = number
                     activity.amountStud = round(subjectStud / (nGroups - number))
-                    subjectStud -= activity.amountStud  
+                    subjectStud -= activity.amountStud
                     activity.students = activityStudents[0:activity.amountStud]
                     del activityStudents[0:activity.amountStud]
                     activity.assignActivitiesToStudents()
@@ -75,19 +75,19 @@ class Activity:
     def __init__(self, subject, kind, lecture_number, maxStud):
         self.subject = subject
         self.kind = kind
-        
+
         self.lecture_number = lecture_number
 
         if maxStud == "nvt":
             self.maxStud = 0
         else:
             self.maxStud = int(maxStud)
-        
+
         self.students = []
         self.group = 0
         self.amountStud = len(self.students)
         self.slot = ()
-        
+
     def __str__(self):
         return "Subject: %s Kind: %s Lecture number: %s Group: %s amountStud: %d " % (self.subject.name, self.kind, self.lecture_number, self.group, self.amountStud)
 
@@ -102,13 +102,13 @@ class Activity:
 
 # A student object has name and id values, plus a list of subject-objects
 class Student:
-    def __init__(self, surname, name, studentId, subject1, subject2, 
+    def __init__(self, surname, name, studentId, subject1, subject2,
                  subject3, subject4, subject5, subject_dct):
-        
+
         self.surname = surname
         self.name = name
         self.studentId = studentId
-        
+
         self.subjects = []
         self.__addSubject(subject1, subject_dct)
         self.__addSubject(subject2, subject_dct)
@@ -116,17 +116,17 @@ class Student:
         self.__addSubject(subject4, subject_dct)
         self.__addSubject(subject5, subject_dct)
 
-        self.__addStudentToSubject()      
-        
+        self.__addStudentToSubject()
+
         self.activities =[]
 
     def __str__(self):
         return "%s" % (self.studentId)
-    
+
     def __addSubject(self, subject, subject_dct):
         if subject != "":
             self.subjects.append(subject_dct[subject])
-    
+
     def __addStudentToSubject(self):
         for subject in self.subjects:
             subject.students.append(self)
@@ -139,7 +139,7 @@ class Roster:
         self.subjects = [Subject(x[0], x[1], x[2], x[3], x[4], x[5]) for x in subjects]
         subject_dct = {x.__str__(): x for x in self.subjects}
 
-        self.students = [Student(x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], subject_dct) 
+        self.students = [Student(x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7], subject_dct)
                     for x in students]
 
         self.studentsActiveFirst = sorted(self.students, key=lambda x:len(x.subjects), reverse=True)
@@ -154,11 +154,11 @@ class Roster:
                 if y.kind == "Lecture":
                     self.activities.append(y)
         for x in self.subjects:
-            for y in x.activities: 
+            for y in x.activities:
                 if y.kind == "WorkLecture":
                     self.activities.append(y)
         for x in self.subjects:
-            for y in x.activities: 
+            for y in x.activities:
                 if y.kind == "Practicum":
                     self.activities.append(y)
 
@@ -166,7 +166,7 @@ class Roster:
         self.timetable = {}
 
         # make sure activities don't overlap (with overlapping activities there are simply to many options)
-        for activity in self.activities:        
+        for activity in self.activities:
             self.getSlot()
             while self.slot in self.timetable:
                 self.getSlot()
@@ -198,22 +198,20 @@ class Roster:
         issues = self.setIssues()
 
 
-        export = {"name": name, "roster" : {"activities":[{"activity": {"slot" : activity.slot, "subject" : activity.subject.name, "kind" : activity.kind, 
-        "lecture_number" : activity.lecture_number, "group" : activity.group, "amountStud": len(activity.students), "maxStud" : activity.maxStud, 
+        export = {"name": name, "roster" : {"activities":[{"activity": {"slot" : activity.slot, "subject" : activity.subject.name, "kind" : activity.kind,
+        "lecture_number" : activity.lecture_number, "group" : activity.group, "amountStud": len(activity.students), "maxStud" : activity.maxStud,
         "students": [student.name + " " + student.surname + " " + student.studentId for student in activity.students] } } for activity in self.activities],
-        
+
         "students":[{"student" : student.name + " " + student.surname + " " + student.studentId } for student in self.students],
 
         "classrooms": [{"number" : room.room_number, "capacity" : room.capacity } for room in self.classrooms],
-    
+
         "subjects": [{"subject" : subject.name } for subject in self.subjects],
         "issues" : [{"category": issue[0], "reference" : issue[1] } for issue in issues]}}
 
-        # [{ "subject" : activity.subject.name, "kind" : activity.kind, "lecture_number" : activity.lecture_number, "group" : activity.group]}
         jsonString = json.dumps(export, indent=4)
 
         f = open('imported_rosters/'+name+'.json', 'w')
-        print(jsonString, end="", file=f)
         f.close()
 
     # For visualization issues need to be identified
@@ -251,7 +249,7 @@ class Roster:
                     problem = False
                     for day in subjectDays:
                         if day != 0 and day != 3:
-                            problem = True 
+                            problem = True
                             break
                     if problem == True:
                         problem = False
@@ -280,7 +278,7 @@ class Roster:
 
         return issues
 
-    # this module is faster than douplicating the roster with deep.copy   
+    # this module is faster than douplicating the roster with deep.copy
     def duplicateRoster(newRoster, bestRoster):
         newRoster.timetable = {}
         for x in range(5):

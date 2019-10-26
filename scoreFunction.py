@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Python implementation of the given score function
+
+"""
+
 from decimal import Decimal
 
 def getScore(roster):
@@ -49,19 +58,19 @@ def getScore(roster):
 
 def prepareSubjectScore(subject):
 
-	# a subject that is spread evenly over the week is worth 20 points. However, some subjects have multiple groups 
-	# for worklectures and practica. For those I calculate for all the groups whether they qualify for 20 points. The 
+	# a subject that is spread evenly over the week is worth 20 points. However, some subjects have multiple groups
+	# for worklectures and practica. For those I calculate for all the groups whether they qualify for 20 points. The
 	# aggregated score is then divided by the number of groups to ensure a subject cannot score more than 20 points
 	lectures, workLectures, practicas = [], [], []
 	for activity in subject.activities:
 		if activity.kind == "WorkLecture":
 			workLectures.append(activity.slot[0])
 		if activity.kind == "Practicum":
-			practicas.append(activity.slot[0])			
+			practicas.append(activity.slot[0])
 		if activity.kind == "Lecture":
 			lectures.append(activity.slot[0])
 
-	i, j = 0, 0 
+	i, j = 0, 0
 
 	if workLectures and practicas:
 		num = len(workLectures) * len(practicas)
@@ -91,7 +100,7 @@ def getSpreadOverlapScore(i, j, combiActivities):
 	if overlapScore == 0:
 		combiActivities.sort()
 
-		if len(combiActivities) == 2:	
+		if len(combiActivities) == 2:
 			if combiActivities == [0,3] or combiActivities == [1,4]:
 				spreadScore = 20
 			else:

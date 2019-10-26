@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Genetic algorithm code
+
+"""
+
 from operator import itemgetter
 import copy
 import random
@@ -37,8 +46,8 @@ def genetics():
 
             # two parents are gathered from the population of 30 and two children are made
             parents = random.sample(range(20), 2)
-            father = rosterPopulation[parents[0]][0] 
-            mother = rosterPopulation[parents[1]][0] 
+            father = rosterPopulation[parents[0]][0]
+            mother = rosterPopulation[parents[1]][0]
             childOne = Roster(classrooms,subjects, students)
             childTwo = Roster(classrooms,subjects, students)
 
@@ -99,7 +108,6 @@ def genetics():
 
                 # make sure students are sorted appropriately over the WorkLectures and Practica
                 # this enhancement seemed to add 50-100 to the score (which was stable over generations)
-                
                 child[c] = studentOptimization(child[c])
                 child[c] = roomOptimization(child[c])
 
@@ -111,11 +119,6 @@ def genetics():
             # delete the unfittest two rosters from the populations
             rosterPopulation.sort(key=itemgetter(1))
             del rosterPopulation[0:2]
-
-            #for roster in rosterPopulation:
-                #print(roster[1])
-
-            print(rosterPopulation[19][1])
             t += 1
 
         scores.append(rosterPopulation[19][1])
@@ -124,11 +127,5 @@ def genetics():
     # export best roster
     runtime = time.process_time() - startTime
     rosterPopulation[19][0].exportRoster("genetics",rosterPopulation[19][1],runtime)
-    print(rosterPopulation[19][1],(iteration * period) + t)
 
-    print("\n")
-    for roster in rosterPopulation:
-        print(roster[1])
-
-    print("--- %s seconds ---" % (runtime))
 genetics()

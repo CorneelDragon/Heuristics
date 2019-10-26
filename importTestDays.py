@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Script for analyzing the used slots per day
+
+"""
+
 import random
 import copy
 import json
@@ -7,7 +16,7 @@ from decimal import Decimal
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-import classesImport as ci 
+import classesImport as ci
 from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
@@ -34,9 +43,6 @@ for filename in glob.glob('rosters_computer_1/*.json'):
 					thursday += 1
 				elif value == 4:
 					friday += 1
-			if wednesday > 25:
-				print (wednesday, filename)
-
 
 for filename in glob.glob('rosters_computer_2/*.json'):
 	if float(filename.split("_",4)[3]) >= 1360.00:
@@ -56,5 +62,3 @@ for filename in glob.glob('rosters_computer_2/*.json'):
 					thursday += 1
 				elif value == 4:
 					friday += 1
-			if wednesday > 25:
-				print (wednesday, filename)

@@ -1,3 +1,11 @@
+/*
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Handle (loading and showing data) all user-input
+
+*/
+
 $.getJSON("visual.json", function(json) {
   
   // set variables

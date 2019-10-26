@@ -1,3 +1,11 @@
+"""
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Make from selected rosters one json for subsequent visualization
+
+"""
+
 import json
 import os
 import glob

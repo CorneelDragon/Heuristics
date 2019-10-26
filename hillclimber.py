@@ -1,3 +1,12 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Hillclimber algorithm code
+
+"""
+
 import random
 import copy
 import time
@@ -35,13 +44,13 @@ def hillclimber():
 
             newRoster.getSlot()
             slotOne = newRoster.slot
-            newRoster.getSlot() 
+            newRoster.getSlot()
             slotTwo = newRoster.slot
 
             slots = [slotOne, slotTwo]
             activities = []
 
-            #swap the activities (if any) of two slots
+            # swap the activities (if any) of two slots
             for index, slot in enumerate(slots):
                 if slot in newRoster.timetable:
                     activities.append(newRoster.timetable[slot])
@@ -56,30 +65,26 @@ def hillclimber():
                             activity.slot = slot
                         else:
                             if activities[j] is not None:
-                                del newRoster.timetable[slot] 
+                                del newRoster.timetable[slot]
 
             # make sure students are sorted appropriately over the WorkLectures and Practica
             # get the timeslots (first 2 values of slot) of the activities and keep only the one's that are double rostered
             newRoster = studentOptimization(newRoster)
-            #oldScore = getScore(newRoster)
             newRoster = roomOptimization(newRoster)
             score = getScore(newRoster)
-            #test = score - oldScore
-            #print("test: ", test)
+
             if score > bestScore:
                 bestRoster = newRoster
                 bestScore = score
                 tBest = (iteration * period) + t
 
-            print(bestScore)
             t += 1
 
         scores.append([bestScore, tBest])
         iteration += 1
 
     runtime = time.process_time() - startTime
-    #print(scores[-1][0],scores[-1][1], ((iteration-1)*period))
     bestRoster.exportRoster("hillclimber",bestScore,runtime)
-    #print("--- %s seconds ---" % (runtime))
+
 
 hillclimber()

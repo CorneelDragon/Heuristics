@@ -1,6 +1,16 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Local search help to ensure that students have no unneccesary double rosters
+
+"""
+
 import copy
 
 def studentOptimization(roster):
+    # select per student timeslots in which they are double rostered
     for student in roster.studentsActiveFirst:
         timeslots = []
         for activity in student.activities:
@@ -19,7 +29,7 @@ def studentOptimization(roster):
                     altActivities.append(activity)
 
         for altActivity in altActivities:
-            for activity in roster.activities:            
+            for activity in roster.activities:
                 if activity.kind == altActivity.kind and activity.subject == altActivity.subject and  \
                 activity.slot[0:2] not in timeslotsDouble and activity.group is not altActivity.group:
                     # if other group is not full, put the student there
@@ -61,10 +71,11 @@ def studentOptimization(roster):
                                 continue
                             else:
                                 continue
+
                         # switch students, maybe we are able to optimalize the other student's roster better
                         if suboptimalStudent != None:
                             changeStudent(student,activity, altActivity)
-                            switchStudent(suboptimalStudent,activity, altActivity)                         
+                            switchStudent(suboptimalStudent,activity, altActivity)
                         break
                     else:
                         continue

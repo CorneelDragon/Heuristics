@@ -1,3 +1,13 @@
+"""
+
+Author: Corneel den Hartogh
+Course: Heuristics
+
+Description: Count and print the number of occurences per issue in selected rosters
+
+"""
+
+
 import random
 import copy
 import json
@@ -8,7 +18,7 @@ from decimal import Decimal
 
 from csvFilesController import classrooms,subjects,students
 from classes import Classroom,Subject,Activity,Student,Roster
-import classesImport as ci 
+import classesImport as ci
 from scoreFunction import getScore
 from studentOptimization import studentOptimization
 from roomOptimization import roomOptimization
@@ -17,6 +27,7 @@ startTime = time.process_time()
 issues = []
 num = 0
 
+# iterate over the issues in selected rosters
 for filename in glob.glob('imported_rosters/*.json'):
 	num += 1
 	with open(filename) as jsonfile:
@@ -32,7 +43,7 @@ for issueUnique in issuesUnique:
 	for issue in issues:
 		if issueUnique == issue:
 			i += 1
-	issueDict[issueUnique] = i 
+	issueDict[issueUnique] = i
 
 sorted_issues = sorted(issueDict.items(), key=operator.itemgetter(1), reverse=True)
 
